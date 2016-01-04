@@ -1,5 +1,5 @@
 # simple360player_iOS
-Simple 360 VR Video player for iOS using SceneKit
+Simple 360 Video player for iOS using SceneKit. VR ready
 
 We generate a simple scene in which we add a sphere centered on the user point of view (i.e. the cameras in (0,0,0)).
 Then we project a texture displaying a SpriteKit scene showing the video on the sphere material.
