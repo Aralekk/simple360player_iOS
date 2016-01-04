@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C4AC3DEE1C3AA7EE009D7CB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC3DED1C3AA7EE009D7CB3 /* AppDelegate.swift */; };
+		C4AC3DF01C3AA7EE009D7CB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC3DEF1C3AA7EE009D7CB3 /* ViewController.swift */; };
+		C4AC3DF31C3AA7EE009D7CB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4AC3DF11C3AA7EE009D7CB3 /* Main.storyboard */; };
+		C4AC3DF51C3AA7EE009D7CB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4AC3DF41C3AA7EE009D7CB3 /* Assets.xcassets */; };
+		C4AC3DF81C3AA7EE009D7CB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4AC3DF61C3AA7EE009D7CB3 /* LaunchScreen.storyboard */; };
+		C4AC3E031C3AA7EE009D7CB3 /* simple360playerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC3E021C3AA7EE009D7CB3 /* simple360playerTests.swift */; };
+		C4AC3E0E1C3AA7EE009D7CB3 /* simple360playerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC3E0D1C3AA7EE009D7CB3 /* simple360playerUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C4AC3DFF1C3AA7EE009D7CB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4AC3DE21C3AA7EE009D7CB3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4AC3DE91C3AA7EE009D7CB3;
+			remoteInfo = simple360player;
+		};
+		C4AC3E0A1C3AA7EE009D7CB3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4AC3DE21C3AA7EE009D7CB3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4AC3DE91C3AA7EE009D7CB3;
+			remoteInfo = simple360player;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C4AC3DEA1C3AA7EE009D7CB3 /* simple360player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simple360player.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4AC3DED1C3AA7EE009D7CB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C4AC3DEF1C3AA7EE009D7CB3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C4AC3DF21C3AA7EE009D7CB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C4AC3DF41C3AA7EE009D7CB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C4AC3DF71C3AA7EE009D7CB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C4AC3DF91C3AA7EE009D7CB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4AC3DFE1C3AA7EE009D7CB3 /* simple360playerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = simple360playerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4AC3E021C3AA7EE009D7CB3 /* simple360playerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple360playerTests.swift; sourceTree = "<group>"; };
+		C4AC3E041C3AA7EE009D7CB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4AC3E091C3AA7EE009D7CB3 /* simple360playerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = simple360playerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4AC3E0D1C3AA7EE009D7CB3 /* simple360playerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple360playerUITests.swift; sourceTree = "<group>"; };
+		C4AC3E0F1C3AA7EE009D7CB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C4AC3DE71C3AA7EE009D7CB3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4AC3DFB1C3AA7EE009D7CB3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4AC3E061C3AA7EE009D7CB3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C4AC3DE11C3AA7EE009D7CB3 = {
+			isa = PBXGroup;
+			children = (
+				C4AC3DEC1C3AA7EE009D7CB3 /* simple360player */,
+				C4AC3E011C3AA7EE009D7CB3 /* simple360playerTests */,
+				C4AC3E0C1C3AA7EE009D7CB3 /* simple360playerUITests */,
+				C4AC3DEB1C3AA7EE009D7CB3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C4AC3DEB1C3AA7EE009D7CB3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4AC3DEA1C3AA7EE009D7CB3 /* simple360player.app */,
+				C4AC3DFE1C3AA7EE009D7CB3 /* simple360playerTests.xctest */,
+				C4AC3E091C3AA7EE009D7CB3 /* simple360playerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4AC3DEC1C3AA7EE009D7CB3 /* simple360player */ = {
+			isa = PBXGroup;
+			children = (
+				C4AC3DED1C3AA7EE009D7CB3 /* AppDelegate.swift */,
+				C4AC3DEF1C3AA7EE009D7CB3 /* ViewController.swift */,
+				C4AC3DF11C3AA7EE009D7CB3 /* Main.storyboard */,
+				C4AC3DF41C3AA7EE009D7CB3 /* Assets.xcassets */,
+				C4AC3DF61C3AA7EE009D7CB3 /* LaunchScreen.storyboard */,
+				C4AC3DF91C3AA7EE009D7CB3 /* Info.plist */,
+			);
+			path = simple360player;
+			sourceTree = "<group>";
+		};
+		C4AC3E011C3AA7EE009D7CB3 /* simple360playerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C4AC3E021C3AA7EE009D7CB3 /* simple360playerTests.swift */,
+				C4AC3E041C3AA7EE009D7CB3 /* Info.plist */,
+			);
+			path = simple360playerTests;
+			sourceTree = "<group>";
+		};
+		C4AC3E0C1C3AA7EE009D7CB3 /* simple360playerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C4AC3E0D1C3AA7EE009D7CB3 /* simple360playerUITests.swift */,
+				C4AC3E0F1C3AA7EE009D7CB3 /* Info.plist */,
+			);
+			path = simple360playerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C4AC3DE91C3AA7EE009D7CB3 /* simple360player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4AC3E121C3AA7EE009D7CB3 /* Build configuration list for PBXNativeTarget "simple360player" */;
+			buildPhases = (
+				C4AC3DE61C3AA7EE009D7CB3 /* Sources */,
+				C4AC3DE71C3AA7EE009D7CB3 /* Frameworks */,
+				C4AC3DE81C3AA7EE009D7CB3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = simple360player;
+			productName = simple360player;
+			productReference = C4AC3DEA1C3AA7EE009D7CB3 /* simple360player.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C4AC3DFD1C3AA7EE009D7CB3 /* simple360playerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4AC3E151C3AA7EE009D7CB3 /* Build configuration list for PBXNativeTarget "simple360playerTests" */;
+			buildPhases = (
+				C4AC3DFA1C3AA7EE009D7CB3 /* Sources */,
+				C4AC3DFB1C3AA7EE009D7CB3 /* Frameworks */,
+				C4AC3DFC1C3AA7EE009D7CB3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C4AC3E001C3AA7EE009D7CB3 /* PBXTargetDependency */,
+			);
+			name = simple360playerTests;
+			productName = simple360playerTests;
+			productReference = C4AC3DFE1C3AA7EE009D7CB3 /* simple360playerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C4AC3E081C3AA7EE009D7CB3 /* simple360playerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4AC3E181C3AA7EE009D7CB3 /* Build configuration list for PBXNativeTarget "simple360playerUITests" */;
+			buildPhases = (
+				C4AC3E051C3AA7EE009D7CB3 /* Sources */,
+				C4AC3E061C3AA7EE009D7CB3 /* Frameworks */,
+				C4AC3E071C3AA7EE009D7CB3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C4AC3E0B1C3AA7EE009D7CB3 /* PBXTargetDependency */,
+			);
+			name = simple360playerUITests;
+			productName = simple360playerUITests;
+			productReference = C4AC3E091C3AA7EE009D7CB3 /* simple360playerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4AC3DE21C3AA7EE009D7CB3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Arthur Swiniarski";
+				TargetAttributes = {
+					C4AC3DE91C3AA7EE009D7CB3 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					C4AC3DFD1C3AA7EE009D7CB3 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = C4AC3DE91C3AA7EE009D7CB3;
+					};
+					C4AC3E081C3AA7EE009D7CB3 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = C4AC3DE91C3AA7EE009D7CB3;
+					};
+				};
+			};
+			buildConfigurationList = C4AC3DE51C3AA7EE009D7CB3 /* Build configuration list for PBXProject "simple360player" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C4AC3DE11C3AA7EE009D7CB3;
+			productRefGroup = C4AC3DEB1C3AA7EE009D7CB3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C4AC3DE91C3AA7EE009D7CB3 /* simple360player */,
+				C4AC3DFD1C3AA7EE009D7CB3 /* simple360playerTests */,
+				C4AC3E081C3AA7EE009D7CB3 /* simple360playerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C4AC3DE81C3AA7EE009D7CB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4AC3DF81C3AA7EE009D7CB3 /* LaunchScreen.storyboard in Resources */,
+				C4AC3DF51C3AA7EE009D7CB3 /* Assets.xcassets in Resources */,
+				C4AC3DF31C3AA7EE009D7CB3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4AC3DFC1C3AA7EE009D7CB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4AC3E071C3AA7EE009D7CB3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C4AC3DE61C3AA7EE009D7CB3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4AC3DF01C3AA7EE009D7CB3 /* ViewController.swift in Sources */,
+				C4AC3DEE1C3AA7EE009D7CB3 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4AC3DFA1C3AA7EE009D7CB3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4AC3E031C3AA7EE009D7CB3 /* simple360playerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4AC3E051C3AA7EE009D7CB3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4AC3E0E1C3AA7EE009D7CB3 /* simple360playerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C4AC3E001C3AA7EE009D7CB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4AC3DE91C3AA7EE009D7CB3 /* simple360player */;
+			targetProxy = C4AC3DFF1C3AA7EE009D7CB3 /* PBXContainerItemProxy */;
+		};
+		C4AC3E0B1C3AA7EE009D7CB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4AC3DE91C3AA7EE009D7CB3 /* simple360player */;
+			targetProxy = C4AC3E0A1C3AA7EE009D7CB3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C4AC3DF11C3AA7EE009D7CB3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4AC3DF21C3AA7EE009D7CB3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C4AC3DF61C3AA7EE009D7CB3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4AC3DF71C3AA7EE009D7CB3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C4AC3E101C3AA7EE009D7CB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C4AC3E111C3AA7EE009D7CB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C4AC3E131C3AA7EE009D7CB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = simple360player/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.simple360player;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C4AC3E141C3AA7EE009D7CB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = simple360player/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.simple360player;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C4AC3E161C3AA7EE009D7CB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = simple360playerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.simple360playerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/simple360player.app/simple360player";
+			};
+			name = Debug;
+		};
+		C4AC3E171C3AA7EE009D7CB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = simple360playerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.simple360playerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/simple360player.app/simple360player";
+			};
+			name = Release;
+		};
+		C4AC3E191C3AA7EE009D7CB3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = simple360playerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.simple360playerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = simple360player;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		C4AC3E1A1C3AA7EE009D7CB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = simple360playerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.simple360playerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = simple360player;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C4AC3DE51C3AA7EE009D7CB3 /* Build configuration list for PBXProject "simple360player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4AC3E101C3AA7EE009D7CB3 /* Debug */,
+				C4AC3E111C3AA7EE009D7CB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4AC3E121C3AA7EE009D7CB3 /* Build configuration list for PBXNativeTarget "simple360player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4AC3E131C3AA7EE009D7CB3 /* Debug */,
+				C4AC3E141C3AA7EE009D7CB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C4AC3E151C3AA7EE009D7CB3 /* Build configuration list for PBXNativeTarget "simple360playerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4AC3E161C3AA7EE009D7CB3 /* Debug */,
+				C4AC3E171C3AA7EE009D7CB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C4AC3E181C3AA7EE009D7CB3 /* Build configuration list for PBXNativeTarget "simple360playerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4AC3E191C3AA7EE009D7CB3 /* Debug */,
+				C4AC3E1A1C3AA7EE009D7CB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4AC3DE21C3AA7EE009D7CB3 /* Project object */;
+}
