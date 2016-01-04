@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="simple360player" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,34 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Js6-CC-VKa">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                            </sceneKitView>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JsU-yv-DqX">
+                                <rect key="frame" x="300" y="0.0" width="300" height="600"/>
+                            </sceneKitView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7ms-Lm-YdQ"/>
+                            <constraint firstItem="JsU-yv-DqX" firstAttribute="leading" secondItem="Js6-CC-VKa" secondAttribute="trailing" id="GRs-H1-MGa"/>
+                            <constraint firstItem="Js6-CC-VKa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ru9-Wm-CuY"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="WUn-iV-LXh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="ah9-6I-neh"/>
+                            <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="iwf-35-dmS"/>
+                            <constraint firstAttribute="trailing" secondItem="JsU-yv-DqX" secondAttribute="trailing" id="pEm-2j-VIW"/>
+                            <constraint firstItem="Js6-CC-VKa" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="q5W-fU-SVq"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="leftSceneView" destination="Js6-CC-VKa" id="p6K-GI-cb2"/>
+                        <outlet property="rightSceneView" destination="JsU-yv-DqX" id="hts-kH-Mu4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="325" y="387"/>
         </scene>
     </scenes>
 </document>
