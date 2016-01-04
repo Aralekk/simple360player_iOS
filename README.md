@@ -9,3 +9,7 @@ We added the ability to pan through the scene with swipes.
 Just remove the rightScene to have a non-VR video 360 Video player.
 
 Hope this will be useful.
+
+## Other platform
+
+To check how to build a HTML5 simple360Player, check out this project: https://github.com/gbentaieb/simple360Player
