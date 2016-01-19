@@ -80,7 +80,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         camerasNode!.addChildNode(leftCameraNode)
         camerasNode!.addChildNode(rightCameraNode)
         
-        camerasNode!.eulerAngles = SCNVector3Make(degreesToRadians(-90.0), 0, 0)
+        let camerasNodeAngles = getCamerasNodeAngle()
+        camerasNode!.eulerAngles = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
         
         cameraRollNode = SCNNode()
         cameraRollNode!.addChildNode(camerasNode!)
@@ -106,7 +107,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         leftSceneView?.playing = true
         rightSceneView?.playing = true
         
-        // Add gesture on screen
+        // Add gestures on screen
         recognizer = UITapGestureRecognizer(target: self, action:Selector("tapTheScreen"))
         recognizer!.delegate = self
         view.addGestureRecognizer(recognizer!)
@@ -117,9 +118,34 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         currentAngleY = 0
         
         play()
-        
+    }
+
+    
+    //MARK: Camera Orientation methods
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        let camerasNodeAngles = getCamerasNodeAngle()
+        camerasNode!.eulerAngles = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
     }
     
+    func getCamerasNodeAngle() -> [Double] {
+        var camerasNodeAngle1: Double! = 0.0
+        var camerasNodeAngle2: Double! = 0.0
+        let orientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
+        if orientation == 1 {
+            camerasNodeAngle1 = -M_PI_2
+        } else if orientation == 2 {
+            camerasNodeAngle1 = M_PI_2
+        } else if orientation == 3 {
+            camerasNodeAngle1 = 0.0
+            camerasNodeAngle2 = M_PI
+        }
+        
+        print(orientation)
+        return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2 ]
+    }
+    
+    
+    //Mark: video player methods
     func play(){
         
         //let fileURL: NSURL? = NSURL(string: "http://www.kolor.com/360-videos-files/noa-neal-graffiti-360-music-video-full-hd.mp4")
@@ -153,9 +179,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             videoSpriteKitNode!.play()
             
             playingVideo = true
-            
         }
-        
     }
     
     func stopPlay(){
@@ -163,16 +187,16 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         if (playingVideo){
             videoSpriteKitNode!.pause()
         }else{
-            
             videoSpriteKitNode!.play()
         }
         
         playingVideo = !playingVideo
-        
     }
     
+    //Mark: action methods
     func tapTheScreen(){
         // Action when the screen is tapped
+        stopPlay()
     }
     
     func panGesture(sender: UIPanGestureRecognizer){
@@ -181,7 +205,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
         var newAngleX = Float(translation.x)
         
-        //current angle is an instance variable so i am adding the newAngle to the newAngle to it
+        //current angle is an instance variable so i am adding the newAngle to it
         newAngleX = newAngleX + currentAngleX!
         videoNode!.eulerAngles.y = -newAngleX/100
         
@@ -191,6 +215,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
     }
     
+    
+    //Mark: Render the scenes
     func renderer(aRenderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval){
         
         // Render the scene
@@ -198,10 +224,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             if let mm = self.motionManager, let motion = mm.deviceMotion {
                 let currentAttitude = motion.attitude
                 
-                var orientationMultiplier = 1.0
-                if(UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.LandscapeRight){ orientationMultiplier = -1.0}
+                var roll : Double = currentAttitude.roll
+                if(UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.LandscapeRight){ roll = -1.0 * (-M_PI - roll)}
                 
-                self.cameraRollNode!.eulerAngles.x = Float(currentAttitude.roll * orientationMultiplier)
+                self.cameraRollNode!.eulerAngles.x = Float(roll)
                 self.cameraPitchNode!.eulerAngles.z = Float(currentAttitude.pitch)
                 self.cameraYawNode!.eulerAngles.y = Float(currentAttitude.yaw)
                 
