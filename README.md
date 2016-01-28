@@ -10,6 +10,12 @@ Just remove the rightScene to have a non-VR video 360 Video player.
 
 Hope this will be useful.
 
-## Other platform
+![alt tag](https://github.com/Aralekk/simple360player_iOS/blob/master/S1.PNG)
+
+## Other platforms
 
 To check how to build a HTML5 simple360Player, check out this project: https://github.com/gbentaieb/simple360Player
+
+## Full VR Toolkit
+
+You can find a basic VR toolkit for iOS in SceneKit Swift 2.0 here: https://github.com/Aralekk/VR_Toolkit_iOS
