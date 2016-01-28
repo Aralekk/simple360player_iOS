@@ -22,6 +22,8 @@
 		C4AC3E291C3AAFCE009D7CB3 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4AC3E281C3AAFCE009D7CB3 /* CoreAudioKit.framework */; };
 		C4AC3E2B1C3AAFD6009D7CB3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4AC3E2A1C3AAFD6009D7CB3 /* AVFoundation.framework */; };
 		C4AC3E2D1C3AB42C009D7CB3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4AC3E2C1C3AB42C009D7CB3 /* CoreVideo.framework */; };
+		C4BB2B761C5A54A000DFEB15 /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4BB2B751C5A54A000DFEB15 /* play@3x.png */; };
+		C4BB2B781C5A54A700DFEB15 /* pause@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4BB2B771C5A54A700DFEB15 /* pause@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		C4AC3E281C3AAFCE009D7CB3 /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		C4AC3E2A1C3AAFD6009D7CB3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C4AC3E2C1C3AB42C009D7CB3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		C4BB2B751C5A54A000DFEB15 /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@3x.png"; sourceTree = "<group>"; };
+		C4BB2B771C5A54A700DFEB15 /* pause@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				C4AC3E1C1C3AAC29009D7CB3 /* vr.mp4 */,
+				C4BB2B771C5A54A700DFEB15 /* pause@3x.png */,
+				C4BB2B751C5A54A000DFEB15 /* play@3x.png */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -271,6 +277,8 @@
 				C4AC3DF81C3AA7EE009D7CB3 /* LaunchScreen.storyboard in Resources */,
 				C4AC3E1D1C3AAC29009D7CB3 /* vr.mp4 in Resources */,
 				C4AC3DF51C3AA7EE009D7CB3 /* Assets.xcassets in Resources */,
+				C4BB2B761C5A54A000DFEB15 /* play@3x.png in Resources */,
+				C4BB2B781C5A54A700DFEB15 /* pause@3x.png in Resources */,
 				C4AC3DF31C3AA7EE009D7CB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

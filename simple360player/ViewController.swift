@@ -23,13 +23,16 @@ func degreesToRadians(degrees: Float) -> Float {
 // ViewController
 class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var leftSceneView: SCNView!
-    @IBOutlet weak var rightSceneView: SCNView!
+    @IBOutlet weak var leftSceneView : SCNView!
+    @IBOutlet weak var rightSceneView : SCNView!
+    @IBOutlet weak var playButton : UIButton!
+    @IBOutlet weak var playerSlideBar : UISlider!
     
     var scene : SCNScene?
     
     var videoNode : SCNNode?
     var videoSpriteKitNode : SKVideoNode?
+    var player : AVPlayer!
     
     var camerasNode : SCNNode?
     var cameraRollNode : SCNNode?
@@ -40,10 +43,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
     var panRecognizer: UIPanGestureRecognizer?
     var motionManager : CMMotionManager?
     
-    var playingVideo:Bool = false
+    var playingVideo : Bool = false
     
-    var currentAngleX:Float?
-    var currentAngleY:Float?
+    var currentAngleX : Float?
+    var currentAngleY : Float?
+    
+    var progressObserver : AnyObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,7 +145,6 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             camerasNodeAngle2 = M_PI
         }
         
-        print(orientation)
         return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2 ]
     }
     
@@ -152,7 +156,10 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         let fileURL: NSURL? = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("vr", ofType: "mp4")!)
         
         if (fileURL != nil){
-            videoSpriteKitNode =  SKVideoNode(AVPlayer: AVPlayer(URL: fileURL!))
+            
+            player = AVPlayer(URL: fileURL!)
+            
+            videoSpriteKitNode =  SKVideoNode(AVPlayer: player)
             videoNode = SCNNode()
             videoNode!.geometry = SCNSphere(radius: 30)
             
@@ -176,9 +183,14 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             videoNode!.position = SCNVector3(x: 0, y: 0, z: 0)
             
             scene!.rootNode.addChildNode(videoNode!)
-            videoSpriteKitNode!.play()
             
-            playingVideo = true
+            progressObserver = player.addPeriodicTimeObserverForInterval(CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)),
+                queue: nil,
+                usingBlock: { [unowned self] (time) -> Void in
+                    self.updateSliderProgression()
+                })
+            
+            playPausePlayer()
         }
     }
     
@@ -191,6 +203,17 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
         
         playingVideo = !playingVideo
+    }
+    
+    @IBAction func playPausePlayer() {
+        if true == playingVideo {
+            videoSpriteKitNode!.pause()
+        } else {
+            videoSpriteKitNode!.play()
+        }
+        
+        playingVideo = !playingVideo
+        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), forState: .Normal)
     }
     
     //Mark: action methods
@@ -232,6 +255,84 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                 self.cameraYawNode!.eulerAngles.y = Float(currentAttitude.yaw)
                 
             }
+        }
+    }
+    
+    // MARK: Slider method
+    private func updateSliderProgression() {
+        let playerDuration = self.playerItemDuration()
+        if CMTIME_IS_INVALID(playerDuration) {
+            playerSlideBar.minimumValue = 0.0
+            return;
+        }
+        
+        let duration = Float(CMTimeGetSeconds(playerDuration))
+        if isfinite(duration) && (duration > 0) {
+            let minValue            = playerSlideBar.minimumValue
+            let maxValue            = playerSlideBar.maximumValue
+            let time                = Float(CMTimeGetSeconds(player.currentTime()))
+            
+            playerSlideBar.value    = (maxValue - minValue) * time / duration + minValue
+        }
+    }
+    
+    private func playerItemDuration() -> CMTime {
+        let thePlayerItem = player.currentItem
+        
+        if AVPlayerItemStatus.ReadyToPlay == thePlayerItem?.status {
+            return thePlayerItem?.duration ?? kCMTimeInvalid
+        }
+        
+        return kCMTimeInvalid
+    }
+    
+    @IBAction func sliderChangeProgression(sender: UISlider) {
+        let playerDuration = self.playerItemDuration()
+        
+        if CMTIME_IS_INVALID(playerDuration) {
+            return;
+        }
+        
+        let duration = Float(CMTimeGetSeconds(playerDuration))
+        if isfinite(duration) && (duration > 0) {
+            print(duration,Float64(duration) * Float64(playerSlideBar.value))
+            player.seekToTime(CMTimeMakeWithSeconds(Float64(duration) * Float64(playerSlideBar.value), 60000))
+            playPausePlayer()
+        }
+    }
+    
+    @IBAction func sliderStartSliding(sender: AnyObject) {
+        videoSpriteKitNode!.pause()
+        playingVideo = false
+        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), forState: .Normal)
+    }
+    
+    //MARK: Clean Methods
+    
+    deinit {
+        motionManager?.stopDeviceMotionUpdates()
+        motionManager = nil
+        
+        if let observer = progressObserver {
+            player.removeTimeObserver(observer)
+        }
+        
+        playingVideo = false
+        
+        self.videoSpriteKitNode?.removeFromParent()
+        
+        for node in scene!.rootNode.childNodes {
+            removeNode(node)
+        }
+    }
+    
+    func removeNode(node : SCNNode) {
+        for node in node.childNodes {
+            removeNode(node)
+        }
+        
+        if 0 == node.childNodes.count {
+            node.removeFromParentNode()
         }
     }
     

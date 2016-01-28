@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -24,15 +25,32 @@
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Js6-CC-VKa">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
                             </sceneKitView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzo-PG-e7j">
+                                <rect key="frame" x="20" y="552" width="40" height="40"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" image="play.png"/>
+                                <connections>
+                                    <action selector="playPausePlayer" destination="BYZ-38-t0r" eventType="touchUpInside" id="XrB-WC-2gE"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW4-ky-bIA">
+                                <rect key="frame" x="66" y="557" width="516" height="31"/>
+                                <connections>
+                                    <action selector="sliderChangeProgression:" destination="BYZ-38-t0r" eventType="valueChanged" id="AoY-gy-7Sl"/>
+                                    <action selector="sliderStartSliding:" destination="BYZ-38-t0r" eventType="touchDown" id="jvF-yM-IHd"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="VW4-ky-bIA" firstAttribute="leading" secondItem="Xzo-PG-e7j" secondAttribute="trailing" constant="8" id="0Iv-DR-fM4"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="10u-cC-rud"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="2RQ-Kw-TMx"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7ms-Lm-YdQ"/>
                             <constraint firstItem="JsU-yv-DqX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ABl-HP-njB"/>
                             <constraint firstItem="JsU-yv-DqX" firstAttribute="leading" secondItem="Js6-CC-VKa" secondAttribute="trailing" id="GRs-H1-MGa"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ru9-Wm-CuY"/>
+                            <constraint firstItem="Xzo-PG-e7j" firstAttribute="centerY" secondItem="VW4-ky-bIA" secondAttribute="centerY" id="WUU-WJ-eEu"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="WUn-iV-LXh"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="ah9-6I-neh"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dTT-GZ-R8b"/>
@@ -41,29 +59,26 @@
                             <constraint firstAttribute="trailing" secondItem="Js6-CC-VKa" secondAttribute="trailing" id="kMM-1f-9wr"/>
                             <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oHp-Y9-41J"/>
                             <constraint firstAttribute="trailing" secondItem="JsU-yv-DqX" secondAttribute="trailing" id="pEm-2j-VIW"/>
+                            <constraint firstItem="VW4-ky-bIA" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pUb-Cc-Zzr"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="q5W-fU-SVq"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:2" id="sfS-5s-nHh"/>
+                            <constraint firstItem="VW4-ky-bIA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="48" id="tg3-h9-Lwc"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="VW4-ky-bIA" secondAttribute="bottom" constant="13" id="yvk-a8-y69"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="ABl-HP-njB"/>
-                                <exclude reference="iBf-B5-Y1g"/>
-                                <exclude reference="oHp-Y9-41J"/>
                                 <exclude reference="2RQ-Kw-TMx"/>
                                 <exclude reference="dTT-GZ-R8b"/>
                                 <exclude reference="kMM-1f-9wr"/>
                                 <exclude reference="sfS-5s-nHh"/>
+                                <exclude reference="ABl-HP-njB"/>
+                                <exclude reference="iBf-B5-Y1g"/>
+                                <exclude reference="oHp-Y9-41J"/>
                                 <exclude reference="10u-cC-rud"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="ABl-HP-njB"/>
-                                <exclude reference="GRs-H1-MGa"/>
-                                <include reference="iBf-B5-Y1g"/>
-                                <exclude reference="iwf-35-dmS"/>
-                                <include reference="oHp-Y9-41J"/>
-                                <exclude reference="pEm-2j-VIW"/>
                                 <include reference="2RQ-Kw-TMx"/>
                                 <exclude reference="7ms-Lm-YdQ"/>
                                 <exclude reference="Ru9-Wm-CuY"/>
@@ -71,6 +86,12 @@
                                 <include reference="kMM-1f-9wr"/>
                                 <exclude reference="q5W-fU-SVq"/>
                                 <include reference="sfS-5s-nHh"/>
+                                <include reference="ABl-HP-njB"/>
+                                <exclude reference="GRs-H1-MGa"/>
+                                <include reference="iBf-B5-Y1g"/>
+                                <exclude reference="iwf-35-dmS"/>
+                                <include reference="oHp-Y9-41J"/>
+                                <exclude reference="pEm-2j-VIW"/>
                                 <include reference="10u-cC-rud"/>
                                 <exclude reference="WUn-iV-LXh"/>
                                 <exclude reference="ah9-6I-neh"/>
@@ -79,6 +100,8 @@
                     </view>
                     <connections>
                         <outlet property="leftSceneView" destination="Js6-CC-VKa" id="p6K-GI-cb2"/>
+                        <outlet property="playButton" destination="Xzo-PG-e7j" id="P3C-8B-VC3"/>
+                        <outlet property="playerSlideBar" destination="VW4-ky-bIA" id="gJa-mJ-tr0"/>
                         <outlet property="rightSceneView" destination="JsU-yv-DqX" id="hts-kH-Mu4"/>
                     </connections>
                 </viewController>
@@ -87,4 +110,7 @@
             <point key="canvasLocation" x="324" y="387"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play.png" width="31" height="31"/>
+    </resources>
 </document>
