@@ -12,6 +12,14 @@ Just remove the rightScene to have a non-VR video 360 Video player.
 
 Hope this will be useful.
 
+- Swipe up/down to move the camera
+- Button to reset the position of the camera
+- Cardboard on/off button
+- Steroscopic Top/Bottom video compatible
+- Play/Pause
+- Slider to control playback position
+- Perf adjusted dependant on the device CPU architecture
+
 ![alt tag](https://github.com/Aralekk/simple360player_iOS/blob/master/S1.PNG)
 
 ## Other platforms
