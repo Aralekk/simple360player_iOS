@@ -15,278 +15,454 @@ import Foundation
 import Darwin
 import CoreGraphics
 
-// utility functions
-func degreesToRadians(degrees: Float) -> Float {
-    return (degrees * Float(M_PI)) / 180.0
-}
-
 // ViewController
 class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var leftSceneView : SCNView!
-    @IBOutlet weak var rightSceneView : SCNView!
-    @IBOutlet weak var playButton : UIButton!
-    @IBOutlet weak var playerSlideBar : UISlider!
+    @IBOutlet weak var leftSceneView                : SCNView!
+    @IBOutlet weak var rightSceneView               : SCNView!
     
-    var scene : SCNScene?
+    @IBOutlet weak var playButton                   : UIButton!
+    @IBOutlet weak var playerSlideBar               : UISlider!
     
-    var videoNode : SCNNode?
-    var videoSpriteKitNode : SKVideoNode?
-    var player : AVPlayer!
+    @IBOutlet weak var cardboardButton              : UIButton!
     
-    var camerasNode : SCNNode?
-    var cameraRollNode : SCNNode?
-    var cameraPitchNode : SCNNode?
-    var cameraYawNode : SCNNode?
+    @IBOutlet weak var heightSceneConstraint        : NSLayoutConstraint!
+    @IBOutlet weak var widthSceneConstraint         : NSLayoutConstraint!
     
-    var recognizer : UITapGestureRecognizer?
-    var panRecognizer: UIPanGestureRecognizer?
-    var motionManager : CMMotionManager?
+    @IBOutlet weak var orientationButton            : UIButton!
     
-    var playingVideo : Bool = false
+    var scenes                                      : [SCNScene]!
     
-    var currentAngleX : Float?
-    var currentAngleY : Float?
+    var videosNode                                  : [SCNNode]!
+    var videosSpriteKitNode                         : [SKVideoNode]!
     
-    var progressObserver : AnyObject?
+    var camerasNode                                 : [SCNNode]!
+    var camerasRollNode                             : [SCNNode]!
+    var camerasPitchNode                            : [SCNNode]!
+    var camerasYawNode                              : [SCNNode]!
     
+    var recognizer                                  : UITapGestureRecognizer?
+    var panRecognizer                               : UIPanGestureRecognizer?
+    var motionManager                               : CMMotionManager?
+    
+    var player                                      : AVPlayer!
+    
+    var currentAngleX                               : Float!
+    var currentAngleY                               : Float!
+    
+    var oldY                                        : Float!
+    var oldX                                        : Float!
+    
+    var progressObserver                            : AnyObject?
+    
+    var playingVideo                                : Bool = false
+    var activateStereoscopicVideo                   : Bool = false
+    var hiddenButton                                : Bool = false
+    var cardboardViewOn                             : Bool = true
+    
+#if arch(arm64)
+    var PROCESSOR_64BITS                            : Bool = true
+#else
+    var PROCESSOR_64BITS                            : Bool = false
+#endif
+    
+//MARK: View Did Load
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        leftSceneView?.backgroundColor = UIColor.blackColor()
-        rightSceneView?.backgroundColor = UIColor.whiteColor()
         
-        // Create Scene
-        scene = SCNScene()
-        leftSceneView?.scene = scene
-        rightSceneView?.scene = scene
+        leftSceneView?.backgroundColor              = UIColor.blackColor()
+        rightSceneView?.backgroundColor             = UIColor.blackColor()
         
-        // Create cameras
-        let camX = 0.0 as Float
-        let camY = 0.0 as Float
-        let camZ = 0.0 as Float
-        let zFar = 50.0
+        leftSceneView.delegate                      = self
+        rightSceneView.delegate                     = self
         
-        let leftCamera = SCNCamera()
-        let rightCamera = SCNCamera()
+        let camX                                    = 0.0 as Float
+        let camY                                    = 0.0 as Float
+        let camZ                                    = 0.0 as Float
+        let zFar                                    = 50.0
         
-        leftCamera.zFar = zFar
-        rightCamera.zFar = zFar
+        let leftCamera                              = SCNCamera()
+        let rightCamera                             = SCNCamera()
         
-        let leftCameraNode = SCNNode()
-        leftCameraNode.camera = leftCamera
-        leftCameraNode.position = SCNVector3(x: camX - 0.5, y: camY, z: camZ)
+        leftCamera.zFar                             = zFar
+        rightCamera.zFar                            = zFar
         
-        let rightCameraNode = SCNNode()
-        rightCameraNode.camera = rightCamera
-        rightCameraNode.position = SCNVector3(x: camX + 0.5, y: camY, z: camZ)
+        let leftCameraNode                          = SCNNode()
+        leftCameraNode.camera                       = leftCamera
         
-        camerasNode = SCNNode()
-        camerasNode!.position = SCNVector3(x: camX, y:camY, z:camZ)
-        camerasNode!.addChildNode(leftCameraNode)
-        camerasNode!.addChildNode(rightCameraNode)
+        let rightCameraNode                         = SCNNode()
+        rightCameraNode.camera                      = rightCamera
         
-        let camerasNodeAngles = getCamerasNodeAngle()
-        camerasNode!.eulerAngles = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
+        let scene1                                  = SCNScene()
         
-        cameraRollNode = SCNNode()
-        cameraRollNode!.addChildNode(camerasNode!)
+        let cameraNodeLeft                          = SCNNode()
+        let cameraRollNodeLeft                      = SCNNode()
+        let cameraPitchNodeLeft                     = SCNNode()
+        let cameraYawNodeLeft                       = SCNNode()
         
-        cameraPitchNode = SCNNode()
-        cameraPitchNode!.addChildNode(cameraRollNode!)
+        cameraNodeLeft.addChildNode(leftCameraNode)
+        cameraNodeLeft.addChildNode(rightCameraNode)
+        cameraRollNodeLeft.addChildNode(cameraNodeLeft)
+        cameraPitchNodeLeft.addChildNode(cameraRollNodeLeft)
+        cameraYawNodeLeft.addChildNode(cameraPitchNodeLeft)
         
-        cameraYawNode = SCNNode()
-        cameraYawNode!.addChildNode(cameraPitchNode!)
+        leftSceneView.scene                         = scene1
         
-        scene!.rootNode.addChildNode(cameraYawNode!)
+        if true == activateStereoscopicVideo {
+            let scene2                              = SCNScene()
+            let cameraNodeRight                     = SCNNode()
+            let cameraRollNodeRight                 = SCNNode()
+            let cameraPitchNodeRight                = SCNNode()
+            let cameraYawNodeRight                  = SCNNode()
+            
+            scenes                                  = [scene1, scene2]
+            camerasNode                             = [cameraNodeLeft, cameraNodeRight]
+            camerasRollNode                         = [cameraRollNodeLeft, cameraRollNodeRight]
+            camerasPitchNode                        = [cameraPitchNodeLeft, cameraPitchNodeRight]
+            camerasYawNode                          = [cameraYawNodeLeft, cameraYawNodeRight]
+            
+            rightSceneView?.scene                   = scene2
+            leftCamera.xFov                         = 80
+            rightCamera.xFov                        = 80
+            leftCamera.yFov                         = 80
+            rightCamera.yFov                        = 80
+            
+            cameraNodeRight.addChildNode(rightCameraNode)
+            cameraRollNodeRight.addChildNode(cameraNodeRight)
+            cameraPitchNodeRight.addChildNode(cameraRollNodeRight)
+            cameraYawNodeRight.addChildNode(cameraPitchNodeRight)
+        } else {
+            scenes                                  = [scene1]
+            camerasNode                             = [cameraNodeLeft]
+            camerasRollNode                         = [cameraRollNodeLeft]
+            camerasPitchNode                        = [cameraPitchNodeLeft]
+            camerasYawNode                          = [cameraYawNodeLeft]
+            rightSceneView?.scene                   = scene1
+        }
         
-        leftSceneView?.pointOfView = leftCameraNode
-        rightSceneView?.pointOfView = rightCameraNode
+        leftCameraNode.position                     = SCNVector3(x: camX - ((true == activateStereoscopicVideo) ? 0.0 : 0.5), y: camY, z: camZ)
+        rightCameraNode.position                    = SCNVector3(x: camX + ((true == activateStereoscopicVideo) ? 0.0 : 0.5), y: camY, z: camZ)
+        
+        let camerasNodeAngles                       = getCamerasNodeAngle()
+        
+        for cameraNode in camerasNode {
+            cameraNode.position                     = SCNVector3(x: camX, y:camY, z:camZ)
+            cameraNode.eulerAngles                  = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
+        }
+        
+        if scenes.count == camerasYawNode.count {
+            for i in 0 ..< scenes.count {
+                let scene                           = scenes[i]
+                let cameraYawNode                   = camerasYawNode[i]
+                
+                scene.rootNode.addChildNode(cameraYawNode)
+            }
+        }
+        
+        leftSceneView?.pointOfView                  = leftCameraNode
+        rightSceneView?.pointOfView                 = rightCameraNode
+        
+        leftSceneView?.playing                      = true
+        rightSceneView?.playing                     = true
         
         // Respond to user head movement. Refreshes the position of the camera 60 times per second.
-        motionManager = CMMotionManager()
-        motionManager?.deviceMotionUpdateInterval = 1.0 / 60.0
+        motionManager                               = CMMotionManager()
+        motionManager?.deviceMotionUpdateInterval   = 1.0 / 60.0
         motionManager?.startDeviceMotionUpdatesUsingReferenceFrame(CMAttitudeReferenceFrame.XArbitraryZVertical)
         
-        leftSceneView?.delegate = self
-        
-        leftSceneView?.playing = true
-        rightSceneView?.playing = true
-        
         // Add gestures on screen
-        recognizer = UITapGestureRecognizer(target: self, action:Selector("tapTheScreen"))
-        recognizer!.delegate = self
+        recognizer                                  = UITapGestureRecognizer(target: self, action:#selector(ViewController.tapTheScreen))
+        recognizer!.delegate                        = self
         view.addGestureRecognizer(recognizer!)
         
-        panRecognizer = UIPanGestureRecognizer(target: self, action: "panGesture:")
+        panRecognizer                               = UIPanGestureRecognizer(target: self, action: #selector(ViewController.panGesture(_:)))
+        panRecognizer?.delegate                     = self
         view.addGestureRecognizer(panRecognizer!)
-        currentAngleX = 0
-        currentAngleY = 0
         
+        //Initialize position variable (for the panGesture)
+        currentAngleX                               = 0
+        currentAngleY                               = 0
+        
+        oldX                                        = 0
+        oldY                                        = 0
+        
+        //Launch the player
         play()
+        
     }
 
-    
-    //MARK: Camera Orientation methods
+//MARK: Camera Orientation
     override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        let camerasNodeAngles = getCamerasNodeAngle()
-        camerasNode!.eulerAngles = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
+        let camerasNodeAngles                       = getCamerasNodeAngle()
+        
+        widthSceneConstraint?.active                = (.Portrait != toInterfaceOrientation && .PortraitUpsideDown != toInterfaceOrientation)
+        heightSceneConstraint?.active               = (.Portrait == toInterfaceOrientation || .PortraitUpsideDown == toInterfaceOrientation)
+        
+        for cameraNode in camerasNode {
+            cameraNode.eulerAngles                  = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
+        }
     }
     
     func getCamerasNodeAngle() -> [Double] {
-        var camerasNodeAngle1: Double! = 0.0
-        var camerasNodeAngle2: Double! = 0.0
+        
+        var camerasNodeAngle1: Double!              = 0.0
+        var camerasNodeAngle2: Double!              = 0.0
+        
         let orientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
+        
         if orientation == 1 {
-            camerasNodeAngle1 = -M_PI_2
+            camerasNodeAngle1                       = -M_PI_2
         } else if orientation == 2 {
-            camerasNodeAngle1 = M_PI_2
+            camerasNodeAngle1                       = M_PI_2
         } else if orientation == 3 {
-            camerasNodeAngle1 = 0.0
-            camerasNodeAngle2 = M_PI
+            camerasNodeAngle1                       = 0.0
+            camerasNodeAngle2                       = M_PI
         }
         
-        return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2 ]
+        return [ -M_PI_2, camerasNodeAngle1, camerasNodeAngle2]
+    
     }
     
+    @IBAction func backToCenter(){
+        
+        currentAngleX = 0
+        currentAngleY = 0
+        
+    }
     
-    //Mark: video player methods
+//MARK: Video Player
     func play(){
         
+        //In case you want to stream from internet, works with compatible AVPlayer media files like mp4 and HLS (.m3u8)
         //let fileURL: NSURL? = NSURL(string: "http://www.kolor.com/360-videos-files/noa-neal-graffiti-360-music-video-full-hd.mp4")
-        let fileURL: NSURL? = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("vr", ofType: "mp4")!)
+        
+        var videoName = "vr"
+        if true == activateStereoscopicVideo {
+            videoName = "vr_stereo"
+        }
+        
+        let fileURL: NSURL? = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource(videoName, ofType: "mp4")!)
         
         if (fileURL != nil){
             
-            player = AVPlayer(URL: fileURL!)
+            var screenScale : CGFloat                                       = 1.0
+            if PROCESSOR_64BITS {
+                screenScale                                                 = CGFloat(3.0)
+            }
             
-            videoSpriteKitNode =  SKVideoNode(AVPlayer: player)
-            videoNode = SCNNode()
-            videoNode!.geometry = SCNSphere(radius: 30)
+            player                                                          = AVPlayer(URL: fileURL!)
+            let videoSpriteKitNodeLeft                                      = SKVideoNode(AVPlayer: player)
+            let videoNodeLeft                                               = SCNNode()
+            let spriteKitScene1                                             = SKScene(size: CGSize(width: 1280 * screenScale, height: 1280 * screenScale))
+            spriteKitScene1.shouldRasterize                                 = true
+            var spriteKitScenes                                             = [spriteKitScene1]
             
-            let spriteKitScene = SKScene(size: CGSize(width: 2500, height: 2500))
-            spriteKitScene.scaleMode = .AspectFit
+            videoNodeLeft.geometry                                          = SCNSphere(radius: 30)
+            spriteKitScene1.scaleMode                                       = .AspectFit
+            videoSpriteKitNodeLeft.position                                 = CGPoint(x: spriteKitScene1.size.width / 2.0, y: spriteKitScene1.size.height / 2.0)
+            videoSpriteKitNodeLeft.size                                     = spriteKitScene1.size
             
-            videoSpriteKitNode!.position = CGPoint(x: spriteKitScene.size.width / 2.0, y: spriteKitScene.size.height / 2.0)
-            videoSpriteKitNode!.size = spriteKitScene.size
+            if true == activateStereoscopicVideo {
+                let videoSpriteKitNodeRight                                 = SKVideoNode(AVPlayer: player)
+                let videoNodeRight                                          = SCNNode()
+                let spriteKitScene2                                         = SKScene(size: CGSize(width: 1280 * screenScale, height: 1280 * screenScale))
+                spriteKitScene2.shouldRasterize                             = true
+                
+                videosSpriteKitNode                                         = [videoSpriteKitNodeLeft, videoSpriteKitNodeRight]
+                videosNode                                                  = [videoNodeLeft, videoNodeRight]
+                spriteKitScenes                                             = [spriteKitScene1, spriteKitScene2]
+                
+                videoNodeRight.geometry                                     = SCNSphere(radius: 30)
+                spriteKitScene2.scaleMode                                   = .AspectFit
+                videoSpriteKitNodeRight.position                            = CGPoint(x: spriteKitScene1.size.width / 2.0, y: spriteKitScene1.size.height / 2.0)
+                videoSpriteKitNodeRight.size                                = spriteKitScene2.size
+                
+                let mask                                                    = SKShapeNode(rect: CGRectMake(0, 0, spriteKitScene1.size.width, spriteKitScene1.size.width / 2.0))
+                mask.fillColor                                              = SKColor.blackColor()
+                
+                let cropNode                                                = SKCropNode()
+                cropNode.maskNode                                           = mask
+                
+                cropNode.addChild(videoSpriteKitNodeLeft)
+                cropNode.yScale                                             = 2
+                cropNode.position                                           = CGPoint(x: 0, y: 0)
+                
+                let mask2                                                   = SKShapeNode(rect: CGRectMake(0, spriteKitScene1.size.width / 2.0, spriteKitScene1.size.width, spriteKitScene1.size.width / 2.0))
+                mask2.fillColor                                             = SKColor.blackColor()
+                let cropNode2                                               = SKCropNode()
+                cropNode2.maskNode                                          = mask2
+                
+                cropNode2.addChild(videoSpriteKitNodeRight)
+                cropNode2.yScale                                            = 2
+                cropNode2.position                                          = CGPoint(x: 0, y: -spriteKitScene1.size.width)
+                
+                spriteKitScene1.addChild(cropNode2)
+                spriteKitScene2.addChild(cropNode)
+                
+            } else {
+                videosSpriteKitNode                                         = [videoSpriteKitNodeLeft]
+                videosNode                                                  = [videoNodeLeft]
+                
+                spriteKitScene1.addChild(videoSpriteKitNodeLeft)
+            }
             
-            spriteKitScene.addChild(videoSpriteKitNode!)
-            
-            videoNode!.geometry?.firstMaterial?.diffuse.contents = spriteKitScene
-            videoNode!.geometry?.firstMaterial?.doubleSided = true
-            
-            // Flip video upside down, so that it's shown in the right position
-            var transform = SCNMatrix4MakeRotation(Float(M_PI), 0.0, 0.0, 1.0)
-            transform = SCNMatrix4Translate(transform, 1.0, 1.0, 0.0)
-            
-            videoNode!.pivot = SCNMatrix4MakeRotation(Float(M_PI_2), 0.0, -1.0, 0.0)
-            videoNode!.geometry?.firstMaterial?.diffuse.contentsTransform = transform
-            videoNode!.position = SCNVector3(x: 0, y: 0, z: 0)
-            
-            scene!.rootNode.addChildNode(videoNode!)
+            if videosNode.count == spriteKitScenes.count && scenes.count == videosNode.count {
+                for i in 0 ..< videosNode.count {
+                    weak var spriteKitScene                                         = spriteKitScenes[i]
+                    let videoNode                                                   = videosNode[i]
+                    let scene                                                       = scenes[i]
+                    
+                    videoNode.geometry?.firstMaterial?.diffuse.contents             = spriteKitScene
+                    videoNode.geometry?.firstMaterial?.doubleSided                  = true
+                    
+                    // Flip video upside down, so that it's shown in the right position
+                    var transform                                                   = SCNMatrix4MakeRotation(Float(M_PI), 0.0, 0.0, 1.0)
+                    transform                                                       = SCNMatrix4Translate(transform, 1.0, 1.0, 0.0)
+                    
+                    videoNode.pivot                                                 = SCNMatrix4MakeRotation(Float(M_PI_2), 0.0, -1.0, 0.0)
+                    videoNode.geometry?.firstMaterial?.diffuse.contentsTransform    = transform
+                    
+                    videoNode.position                                              = SCNVector3(x: 0, y: 0, z: 0)
+                    videoNode.position                                              = SCNVector3(x: 0, y: 0, z: 0)
+                    
+                    scene.rootNode.addChildNode(videoNode)
+                }
+            }
             
             progressObserver = player.addPeriodicTimeObserverForInterval(CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)),
-                queue: nil,
-                usingBlock: { [unowned self] (time) -> Void in
-                    self.updateSliderProgression()
-                })
+                                                                         queue: nil,
+                                                                    usingBlock: { [unowned self] (time) -> Void in
+                                                                                    self.updateSliderProgression()
+                                                                                }
+                                                                        )
             
             playPausePlayer()
         }
     }
     
-    func stopPlay(){
-        
-        if (playingVideo){
-            videoSpriteKitNode!.pause()
-        }else{
-            videoSpriteKitNode!.play()
-        }
-        
-        playingVideo = !playingVideo
-    }
-    
     @IBAction func playPausePlayer() {
-        if true == playingVideo {
-            videoSpriteKitNode!.pause()
-        } else {
-            videoSpriteKitNode!.play()
+        
+        for videoSpriteKitNode in videosSpriteKitNode {
+            if true == playingVideo {
+                videoSpriteKitNode.pause()
+            } else {
+                videoSpriteKitNode.play()
+            }
         }
         
         playingVideo = !playingVideo
         playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), forState: .Normal)
+        
     }
     
-    //Mark: action methods
+//MARK: Touch Methods
     func tapTheScreen(){
-        // Action when the screen is tapped
-        stopPlay()
+        
+        if (hiddenButton){
+            playButton.hidden                                               = false
+            playerSlideBar.hidden                                           = false
+            cardboardButton.hidden                                          = false
+            orientationButton.hidden                                        = false
+        }else {
+            playButton.hidden                                               = true
+            playerSlideBar.hidden                                           = true
+            cardboardButton.hidden                                          = true
+            orientationButton.hidden                                        = true
+        }
+        
+        hiddenButton                                                        = !hiddenButton
     }
     
     func panGesture(sender: UIPanGestureRecognizer){
-        //getting the CGpoint at the end of the pan
-        let translation = sender.translationInView(sender.view!)
         
-        var newAngleX = Float(translation.x)
+        let translation                                                     = sender.translationInView(sender.view!)
+        let protection : Float                                              = 2.0
         
-        //current angle is an instance variable so i am adding the newAngle to it
-        newAngleX = newAngleX + currentAngleX!
-        videoNode!.eulerAngles.y = -newAngleX/100
+        if (abs(Float(translation.x) - oldX) >= protection){
+            let newAngleX                                                   = Float(translation.x) - oldX - protection
+            currentAngleX                                                   = newAngleX/100 + currentAngleX
+            oldX                                                            = Float(translation.x)
+        }
         
-        //getting the end angle of the swipe put into the instance variable
+        if (abs(Float(translation.y) - oldY) >= protection){
+            let newAngleY                                                   = Float(translation.y) - oldY - protection
+            currentAngleY                                                   = newAngleY/100 + currentAngleY
+            oldY                                                            = Float(translation.y)
+        }
+        
         if(sender.state == UIGestureRecognizerState.Ended) {
-            currentAngleX = newAngleX
+            oldX                                                            = 0
+            oldY                                                            = 0
         }
     }
     
     
-    //Mark: Render the scenes
+//MARK: Render the scene
     func renderer(aRenderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval){
         
         // Render the scene
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            if let mm = self.motionManager, let motion = mm.deviceMotion {
-                let currentAttitude = motion.attitude
-                
-                var roll : Double = currentAttitude.roll
-                if(UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.LandscapeRight){ roll = -1.0 * (-M_PI - roll)}
-                
-                self.cameraRollNode!.eulerAngles.x = Float(roll)
-                self.cameraPitchNode!.eulerAngles.z = Float(currentAttitude.pitch)
-                self.cameraYawNode!.eulerAngles.y = Float(currentAttitude.yaw)
-                
+        dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
+            if let strongSelf = self {
+                if let mm = strongSelf.motionManager, let motion = mm.deviceMotion {
+                    let currentAttitude                                     = motion.attitude
+                    
+                    var roll : Double                                       = currentAttitude.roll
+                    
+                    if(UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.LandscapeRight) {
+                        roll                                                = -1.0 * (-M_PI - roll)
+                    }
+                    
+                    for cameraRollNode in strongSelf.camerasRollNode {
+                        cameraRollNode.eulerAngles.x                        = Float(roll) - strongSelf.currentAngleY
+                    }
+                    
+                    for cameraPitchNode in strongSelf.camerasPitchNode {
+                        cameraPitchNode.eulerAngles.z                       = Float(currentAttitude.pitch)
+                    }
+                    
+                    for cameraYawNode in strongSelf.camerasYawNode {
+                        cameraYawNode.eulerAngles.y                         = Float(currentAttitude.yaw) + strongSelf.currentAngleX
+                    }
+                }
             }
         }
     }
     
-    // MARK: Slider method
+//MARK: Slider
     private func updateSliderProgression() {
+        
         let playerDuration = self.playerItemDuration()
         if CMTIME_IS_INVALID(playerDuration) {
-            playerSlideBar.minimumValue = 0.0
+            playerSlideBar.minimumValue                                     = 0.0
             return;
         }
         
         let duration = Float(CMTimeGetSeconds(playerDuration))
         if isfinite(duration) && (duration > 0) {
-            let minValue            = playerSlideBar.minimumValue
-            let maxValue            = playerSlideBar.maximumValue
-            let time                = Float(CMTimeGetSeconds(player.currentTime()))
+            let minValue                                                    = playerSlideBar.minimumValue
+            let maxValue                                                    = playerSlideBar.maximumValue
+            let time                                                        = Float(CMTimeGetSeconds(player.currentTime()))
             
-            playerSlideBar.value    = (maxValue - minValue) * time / duration + minValue
+            playerSlideBar.value                                            = (maxValue - minValue) * time / duration + minValue
         }
+        
     }
     
     private func playerItemDuration() -> CMTime {
-        let thePlayerItem = player.currentItem
+        
+        let thePlayerItem                                                   = player.currentItem
         
         if AVPlayerItemStatus.ReadyToPlay == thePlayerItem?.status {
             return thePlayerItem?.duration ?? kCMTimeInvalid
         }
         
         return kCMTimeInvalid
+        
     }
     
     @IBAction func sliderChangeProgression(sender: UISlider) {
+        
         let playerDuration = self.playerItemDuration()
         
         if CMTIME_IS_INVALID(playerDuration) {
@@ -299,17 +475,51 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             player.seekToTime(CMTimeMakeWithSeconds(Float64(duration) * Float64(playerSlideBar.value), 60000))
             playPausePlayer()
         }
+        
     }
     
     @IBAction func sliderStartSliding(sender: AnyObject) {
-        videoSpriteKitNode!.pause()
+        
+        for videoSpriteKitNode in videosSpriteKitNode {
+            videoSpriteKitNode.pause()
+        }
+        
         playingVideo = false
         playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), forState: .Normal)
+        
     }
     
-    //MARK: Clean Methods
+//MARK: Cardboard on-off
+    @IBAction func activateCardboardView(sender: AnyObject) {
+        
+        cardboardViewOn                                         = !cardboardViewOn
+        displayIfNeededCardboardView()
+        
+    }
     
+    private func displayIfNeededCardboardView() {
+        
+        let width                                               = (view.bounds.width > view.bounds.height) ? view.bounds.width : view.bounds.height;
+        
+        widthSceneConstraint?.constant                          = (true == cardboardViewOn) ? (width / 2.0) : 1
+        heightSceneConstraint?.constant                         = (true == cardboardViewOn) ? (width / 2.0) : 1
+        leftSceneView.hidden                                    = (false == cardboardViewOn)
+        
+        cardboardButton?.setImage(UIImage(named: (true == cardboardViewOn) ? "cardboardOn" : "cardboardOff"), forState: .Normal)
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if let _ = leftSceneView, _ = rightSceneView {
+            displayIfNeededCardboardView()
+        }
+    }
+    
+//MARK: Clean perf
     deinit {
+        
         motionManager?.stopDeviceMotionUpdates()
         motionManager = nil
         
@@ -319,14 +529,20 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
         playingVideo = false
         
-        self.videoSpriteKitNode?.removeFromParent()
-        
-        for node in scene!.rootNode.childNodes {
-            removeNode(node)
+        for videoSKNode in videosSpriteKitNode {
+            videoSKNode.removeFromParent()
         }
+        
+        for scene in scenes {
+            for node in scene.rootNode.childNodes {
+                removeNode(node)
+            }
+        }
+        
     }
     
     func removeNode(node : SCNNode) {
+        
         for node in node.childNodes {
             removeNode(node)
         }
@@ -334,12 +550,14 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         if 0 == node.childNodes.count {
             node.removeFromParentNode()
         }
+        
     }
     
     override func didReceiveMemoryWarning()
     {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
 }
-

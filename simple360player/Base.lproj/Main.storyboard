@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -21,12 +20,33 @@
                         <subviews>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JsU-yv-DqX">
                                 <rect key="frame" x="300" y="0.0" width="300" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </sceneKitView>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Js6-CC-VKa">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="ueM-nB-pXD"/>
+                                    <constraint firstAttribute="width" constant="300" id="zw0-Rl-jc9"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ueM-nB-pXD"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="ueM-nB-pXD"/>
+                                        <exclude reference="zw0-Rl-jc9"/>
+                                    </mask>
+                                </variation>
                             </sceneKitView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzo-PG-e7j">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzo-PG-e7j">
                                 <rect key="frame" x="20" y="552" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="j3n-6Z-YaT"/>
+                                    <constraint firstAttribute="width" constant="40" id="k7w-Dt-hoh"/>
+                                </constraints>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="play.png"/>
                                 <connections>
@@ -40,77 +60,108 @@
                                     <action selector="sliderStartSliding:" destination="BYZ-38-t0r" eventType="touchDown" id="jvF-yM-IHd"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAl-tc-MHs">
+                                <rect key="frame" x="20" y="20" width="41" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="41" id="Bgd-Pj-K19"/>
+                                    <constraint firstAttribute="height" constant="25" id="hCz-Nj-iee"/>
+                                </constraints>
+                                <state key="normal" image="cardboardOn.png"/>
+                                <connections>
+                                    <action selector="activateCardboardView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oPE-7e-3LU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3TB-c1-fm5">
+                                <rect key="frame" x="540" y="13" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="f1P-ML-3gf"/>
+                                    <constraint firstAttribute="width" constant="40" id="zce-L1-sqN"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" image="arrows.png"/>
+                                <connections>
+                                    <action selector="backToCenter" destination="BYZ-38-t0r" eventType="touchUpInside" id="H00-0B-cLO"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="VW4-ky-bIA" firstAttribute="leading" secondItem="Xzo-PG-e7j" secondAttribute="trailing" constant="8" id="0Iv-DR-fM4"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="10u-cC-rud"/>
-                            <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="2RQ-Kw-TMx"/>
-                            <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7ms-Lm-YdQ"/>
+                            <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="136-Ea-60d"/>
+                            <constraint firstItem="yAl-tc-MHs" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="20" id="1m1-QM-k5V"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="6we-Dp-8cu"/>
+                            <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="6ww-1V-zRn"/>
                             <constraint firstItem="JsU-yv-DqX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ABl-HP-njB"/>
-                            <constraint firstItem="JsU-yv-DqX" firstAttribute="leading" secondItem="Js6-CC-VKa" secondAttribute="trailing" id="GRs-H1-MGa"/>
-                            <constraint firstItem="Js6-CC-VKa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ru9-Wm-CuY"/>
+                            <constraint firstAttribute="trailing" secondItem="JsU-yv-DqX" secondAttribute="trailing" id="D66-jC-Yau"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="EdC-iA-1HM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="Qmp-oY-Isv"/>
+                            <constraint firstItem="3TB-c1-fm5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="13" id="WNY-bw-myC"/>
                             <constraint firstItem="Xzo-PG-e7j" firstAttribute="centerY" secondItem="VW4-ky-bIA" secondAttribute="centerY" id="WUU-WJ-eEu"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="WUn-iV-LXh"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JsU-yv-DqX" secondAttribute="bottom" id="ah9-6I-neh"/>
+                            <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="top" id="WhA-3p-JzE"/>
+                            <constraint firstItem="yAl-tc-MHs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="ZYi-t2-bIr"/>
+                            <constraint firstItem="JsU-yv-DqX" firstAttribute="leading" secondItem="Js6-CC-VKa" secondAttribute="trailing" id="aQg-06-ccl"/>
+                            <constraint firstItem="Js6-CC-VKa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="abM-cA-7HT"/>
                             <constraint firstItem="Js6-CC-VKa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dTT-GZ-R8b"/>
                             <constraint firstAttribute="trailing" secondItem="JsU-yv-DqX" secondAttribute="trailing" id="iBf-B5-Y1g"/>
-                            <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="iwf-35-dmS"/>
+                            <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="Js6-CC-VKa" secondAttribute="bottom" id="kI0-VP-Es8"/>
                             <constraint firstAttribute="trailing" secondItem="Js6-CC-VKa" secondAttribute="trailing" id="kMM-1f-9wr"/>
-                            <constraint firstItem="JsU-yv-DqX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oHp-Y9-41J"/>
-                            <constraint firstAttribute="trailing" secondItem="JsU-yv-DqX" secondAttribute="trailing" id="pEm-2j-VIW"/>
+                            <constraint firstAttribute="trailing" secondItem="3TB-c1-fm5" secondAttribute="trailing" constant="20" id="mUt-I8-RSd"/>
                             <constraint firstItem="VW4-ky-bIA" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pUb-Cc-Zzr"/>
-                            <constraint firstItem="Js6-CC-VKa" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="q5W-fU-SVq"/>
-                            <constraint firstItem="Js6-CC-VKa" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:2" id="sfS-5s-nHh"/>
+                            <constraint firstItem="Js6-CC-VKa" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rPm-vR-9q2"/>
                             <constraint firstItem="VW4-ky-bIA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="48" id="tg3-h9-Lwc"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="VW4-ky-bIA" secondAttribute="bottom" constant="13" id="yvk-a8-y69"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="2RQ-Kw-TMx"/>
                                 <exclude reference="dTT-GZ-R8b"/>
                                 <exclude reference="kMM-1f-9wr"/>
-                                <exclude reference="sfS-5s-nHh"/>
+                                <exclude reference="rPm-vR-9q2"/>
                                 <exclude reference="ABl-HP-njB"/>
+                                <exclude reference="WhA-3p-JzE"/>
                                 <exclude reference="iBf-B5-Y1g"/>
-                                <exclude reference="oHp-Y9-41J"/>
-                                <exclude reference="10u-cC-rud"/>
+                                <exclude reference="kI0-VP-Es8"/>
+                                <exclude reference="6we-Dp-8cu"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="2RQ-Kw-TMx"/>
-                                <exclude reference="7ms-Lm-YdQ"/>
-                                <exclude reference="Ru9-Wm-CuY"/>
+                                <exclude reference="6ww-1V-zRn"/>
+                                <exclude reference="abM-cA-7HT"/>
                                 <include reference="dTT-GZ-R8b"/>
                                 <include reference="kMM-1f-9wr"/>
-                                <exclude reference="q5W-fU-SVq"/>
-                                <include reference="sfS-5s-nHh"/>
+                                <include reference="rPm-vR-9q2"/>
+                                <exclude reference="136-Ea-60d"/>
                                 <include reference="ABl-HP-njB"/>
-                                <exclude reference="GRs-H1-MGa"/>
+                                <exclude reference="D66-jC-Yau"/>
+                                <exclude reference="WhA-3p-JzE"/>
+                                <exclude reference="aQg-06-ccl"/>
                                 <include reference="iBf-B5-Y1g"/>
-                                <exclude reference="iwf-35-dmS"/>
-                                <include reference="oHp-Y9-41J"/>
-                                <exclude reference="pEm-2j-VIW"/>
-                                <include reference="10u-cC-rud"/>
-                                <exclude reference="WUn-iV-LXh"/>
-                                <exclude reference="ah9-6I-neh"/>
+                                <include reference="kI0-VP-Es8"/>
+                                <include reference="6we-Dp-8cu"/>
+                                <exclude reference="EdC-iA-1HM"/>
+                                <exclude reference="Qmp-oY-Isv"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="cardboardButton" destination="yAl-tc-MHs" id="wsl-bW-LWL"/>
+                        <outlet property="heightSceneConstraint" destination="ueM-nB-pXD" id="Gng-de-95o"/>
                         <outlet property="leftSceneView" destination="Js6-CC-VKa" id="p6K-GI-cb2"/>
+                        <outlet property="orientationButton" destination="3TB-c1-fm5" id="Dcf-OF-pSE"/>
                         <outlet property="playButton" destination="Xzo-PG-e7j" id="P3C-8B-VC3"/>
                         <outlet property="playerSlideBar" destination="VW4-ky-bIA" id="gJa-mJ-tr0"/>
                         <outlet property="rightSceneView" destination="JsU-yv-DqX" id="hts-kH-Mu4"/>
+                        <outlet property="widthSceneConstraint" destination="zw0-Rl-jc9" id="XwY-aa-Bk4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="324" y="387"/>
+            <point key="canvasLocation" x="364" y="389"/>
         </scene>
     </scenes>
     <resources>
+        <image name="arrows.png" width="256" height="256"/>
+        <image name="cardboardOn.png" width="87" height="51"/>
         <image name="play.png" width="31" height="31"/>
     </resources>
 </document>

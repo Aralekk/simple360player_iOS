@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C446D20B1CD786B5005C805E /* arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = C446D2081CD786B5005C805E /* arrows.png */; };
+		C446D20C1CD786B5005C805E /* cardboardOff.png in Resources */ = {isa = PBXBuildFile; fileRef = C446D2091CD786B5005C805E /* cardboardOff.png */; };
+		C446D20D1CD786B5005C805E /* cardboardOn.png in Resources */ = {isa = PBXBuildFile; fileRef = C446D20A1CD786B5005C805E /* cardboardOn.png */; };
+		C446D20F1CD786BC005C805E /* vr_stereo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = C446D20E1CD786BC005C805E /* vr_stereo.mp4 */; };
 		C4AC3DEE1C3AA7EE009D7CB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC3DED1C3AA7EE009D7CB3 /* AppDelegate.swift */; };
 		C4AC3DF01C3AA7EE009D7CB3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC3DEF1C3AA7EE009D7CB3 /* ViewController.swift */; };
 		C4AC3DF31C3AA7EE009D7CB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4AC3DF11C3AA7EE009D7CB3 /* Main.storyboard */; };
@@ -44,6 +48,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C446D2081CD786B5005C805E /* arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrows.png; sourceTree = "<group>"; };
+		C446D2091CD786B5005C805E /* cardboardOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardboardOff.png; sourceTree = "<group>"; };
+		C446D20A1CD786B5005C805E /* cardboardOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardboardOn.png; sourceTree = "<group>"; };
+		C446D20E1CD786BC005C805E /* vr_stereo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = vr_stereo.mp4; sourceTree = "<group>"; };
 		C4AC3DEA1C3AA7EE009D7CB3 /* simple360player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simple360player.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4AC3DED1C3AA7EE009D7CB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4AC3DEF1C3AA7EE009D7CB3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,8 +172,12 @@
 			isa = PBXGroup;
 			children = (
 				C4AC3E1C1C3AAC29009D7CB3 /* vr.mp4 */,
+				C446D20E1CD786BC005C805E /* vr_stereo.mp4 */,
 				C4BB2B771C5A54A700DFEB15 /* pause@3x.png */,
 				C4BB2B751C5A54A000DFEB15 /* play@3x.png */,
+				C446D2081CD786B5005C805E /* arrows.png */,
+				C446D2091CD786B5005C805E /* cardboardOff.png */,
+				C446D20A1CD786B5005C805E /* cardboardOn.png */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -274,10 +286,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C446D20C1CD786B5005C805E /* cardboardOff.png in Resources */,
 				C4AC3DF81C3AA7EE009D7CB3 /* LaunchScreen.storyboard in Resources */,
 				C4AC3E1D1C3AAC29009D7CB3 /* vr.mp4 in Resources */,
 				C4AC3DF51C3AA7EE009D7CB3 /* Assets.xcassets in Resources */,
+				C446D20B1CD786B5005C805E /* arrows.png in Resources */,
+				C446D20D1CD786B5005C805E /* cardboardOn.png in Resources */,
 				C4BB2B761C5A54A000DFEB15 /* play@3x.png in Resources */,
+				C446D20F1CD786BC005C805E /* vr_stereo.mp4 in Resources */,
 				C4BB2B781C5A54A700DFEB15 /* pause@3x.png in Resources */,
 				C4AC3DF31C3AA7EE009D7CB3 /* Main.storyboard in Resources */,
 			);
