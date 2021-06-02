@@ -71,8 +71,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
         super.viewDidLoad()
         
-        leftSceneView?.backgroundColor              = UIColor.blackColor()
-        rightSceneView?.backgroundColor             = UIColor.blackColor()
+        leftSceneView?.backgroundColor              = UIColor.black
+        rightSceneView?.backgroundColor             = UIColor.black
         
         leftSceneView.delegate                      = self
         rightSceneView.delegate                     = self
@@ -163,13 +163,13 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         leftSceneView?.pointOfView                  = leftCameraNode
         rightSceneView?.pointOfView                 = rightCameraNode
         
-        leftSceneView?.playing                      = true
-        rightSceneView?.playing                     = true
+        leftSceneView?.isPlaying                      = true
+        rightSceneView?.isPlaying                     = true
         
         // Respond to user head movement. Refreshes the position of the camera 60 times per second.
         motionManager                               = CMMotionManager()
         motionManager?.deviceMotionUpdateInterval   = 1.0 / 60.0
-        motionManager?.startDeviceMotionUpdatesUsingReferenceFrame(CMAttitudeReferenceFrame.XArbitraryZVertical)
+        motionManager?.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryZVertical)
         
         // Add gestures on screen
         recognizer                                  = UITapGestureRecognizer(target: self, action:#selector(ViewController.tapTheScreen))
@@ -193,11 +193,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
     }
 
 //MARK: Camera Orientation
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         let camerasNodeAngles                       = getCamerasNodeAngle()
         
-        widthSceneConstraint?.active                = (.Portrait != toInterfaceOrientation && .PortraitUpsideDown != toInterfaceOrientation)
-        heightSceneConstraint?.active               = (.Portrait == toInterfaceOrientation || .PortraitUpsideDown == toInterfaceOrientation)
+        widthSceneConstraint?.isActive                = (.portrait != toInterfaceOrientation && .portraitUpsideDown != toInterfaceOrientation)
+        heightSceneConstraint?.isActive               = (.portrait == toInterfaceOrientation || .portraitUpsideDown == toInterfaceOrientation)
         
         for cameraNode in camerasNode {
             cameraNode.eulerAngles                  = SCNVector3Make(Float(camerasNodeAngles[0]), Float(camerasNodeAngles[1]), Float(camerasNodeAngles[2]))
@@ -209,7 +209,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         var camerasNodeAngle1: Double!              = 0.0
         var camerasNodeAngle2: Double!              = 0.0
         
-        let orientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
+        let orientation = UIApplication.shared.statusBarOrientation.rawValue
         
         if orientation == 1 {
             camerasNodeAngle1                       = -M_PI_2
@@ -242,7 +242,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             videoName = "vr_stereo"
         }
         
-        let fileURL: NSURL? = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource(videoName, ofType: "mp4")!)
+        let fileURL: URL? = URL(fileURLWithPath: Bundle.main.path(forResource: videoName, ofType: "mp4")!)
         
         if (fileURL != nil){
             
@@ -251,20 +251,20 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                 screenScale                                                 = CGFloat(3.0)
             }
             
-            player                                                          = AVPlayer(URL: fileURL!)
-            let videoSpriteKitNodeLeft                                      = SKVideoNode(AVPlayer: player)
+            player                                                          = AVPlayer(url: fileURL!)
+            let videoSpriteKitNodeLeft                                      = SKVideoNode(avPlayer: player)
             let videoNodeLeft                                               = SCNNode()
             let spriteKitScene1                                             = SKScene(size: CGSize(width: 1280 * screenScale, height: 1280 * screenScale))
             spriteKitScene1.shouldRasterize                                 = true
             var spriteKitScenes                                             = [spriteKitScene1]
             
             videoNodeLeft.geometry                                          = SCNSphere(radius: 30)
-            spriteKitScene1.scaleMode                                       = .AspectFit
+            spriteKitScene1.scaleMode                                       = .aspectFit
             videoSpriteKitNodeLeft.position                                 = CGPoint(x: spriteKitScene1.size.width / 2.0, y: spriteKitScene1.size.height / 2.0)
             videoSpriteKitNodeLeft.size                                     = spriteKitScene1.size
             
             if true == activateStereoscopicVideo {
-                let videoSpriteKitNodeRight                                 = SKVideoNode(AVPlayer: player)
+                let videoSpriteKitNodeRight                                 = SKVideoNode(avPlayer: player)
                 let videoNodeRight                                          = SCNNode()
                 let spriteKitScene2                                         = SKScene(size: CGSize(width: 1280 * screenScale, height: 1280 * screenScale))
                 spriteKitScene2.shouldRasterize                             = true
@@ -274,12 +274,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                 spriteKitScenes                                             = [spriteKitScene1, spriteKitScene2]
                 
                 videoNodeRight.geometry                                     = SCNSphere(radius: 30)
-                spriteKitScene2.scaleMode                                   = .AspectFit
+                spriteKitScene2.scaleMode                                   = .aspectFit
                 videoSpriteKitNodeRight.position                            = CGPoint(x: spriteKitScene1.size.width / 2.0, y: spriteKitScene1.size.height / 2.0)
                 videoSpriteKitNodeRight.size                                = spriteKitScene2.size
                 
-                let mask                                                    = SKShapeNode(rect: CGRectMake(0, 0, spriteKitScene1.size.width, spriteKitScene1.size.width / 2.0))
-                mask.fillColor                                              = SKColor.blackColor()
+                let mask                                                    = SKShapeNode(rect: CGRect(x: 0, y: 0, width: spriteKitScene1.size.width, height: spriteKitScene1.size.width / 2.0))
+                mask.fillColor                                              = SKColor.black
                 
                 let cropNode                                                = SKCropNode()
                 cropNode.maskNode                                           = mask
@@ -288,8 +288,8 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                 cropNode.yScale                                             = 2
                 cropNode.position                                           = CGPoint(x: 0, y: 0)
                 
-                let mask2                                                   = SKShapeNode(rect: CGRectMake(0, spriteKitScene1.size.width / 2.0, spriteKitScene1.size.width, spriteKitScene1.size.width / 2.0))
-                mask2.fillColor                                             = SKColor.blackColor()
+                let mask2                                                   = SKShapeNode(rect: CGRect(x: 0, y: spriteKitScene1.size.width / 2.0, width: spriteKitScene1.size.width, height: spriteKitScene1.size.width / 2.0))
+                mask2.fillColor                                             = SKColor.black
                 let cropNode2                                               = SKCropNode()
                 cropNode2.maskNode                                          = mask2
                 
@@ -314,7 +314,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                     let scene                                                       = scenes[i]
                     
                     videoNode.geometry?.firstMaterial?.diffuse.contents             = spriteKitScene
-                    videoNode.geometry?.firstMaterial?.doubleSided                  = true
+                    videoNode.geometry?.firstMaterial?.isDoubleSided                  = true
                     
                     // Flip video upside down, so that it's shown in the right position
                     var transform                                                   = SCNMatrix4MakeRotation(Float(M_PI), 0.0, 0.0, 1.0)
@@ -330,12 +330,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                 }
             }
             
-            progressObserver = player.addPeriodicTimeObserverForInterval(CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)),
+            progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)),
                                                                          queue: nil,
-                                                                    usingBlock: { [unowned self] (time) -> Void in
+                                                                    using: { [unowned self] (time) -> Void in
                                                                                     self.updateSliderProgression()
                                                                                 }
-                                                                        )
+                                                                        ) as AnyObject?
             
             playPausePlayer()
         }
@@ -352,7 +352,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
         
         playingVideo = !playingVideo
-        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), forState: .Normal)
+        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), for: UIControlState())
         
     }
     
@@ -360,23 +360,23 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
     func tapTheScreen(){
         
         if (hiddenButton){
-            playButton.hidden                                               = false
-            playerSlideBar.hidden                                           = false
-            cardboardButton.hidden                                          = false
-            orientationButton.hidden                                        = false
+            playButton.isHidden                                               = false
+            playerSlideBar.isHidden                                           = false
+            cardboardButton.isHidden                                          = false
+            orientationButton.isHidden                                        = false
         }else {
-            playButton.hidden                                               = true
-            playerSlideBar.hidden                                           = true
-            cardboardButton.hidden                                          = true
-            orientationButton.hidden                                        = true
+            playButton.isHidden                                               = true
+            playerSlideBar.isHidden                                           = true
+            cardboardButton.isHidden                                          = true
+            orientationButton.isHidden                                        = true
         }
         
         hiddenButton                                                        = !hiddenButton
     }
     
-    func panGesture(sender: UIPanGestureRecognizer){
+    func panGesture(_ sender: UIPanGestureRecognizer){
         
-        let translation                                                     = sender.translationInView(sender.view!)
+        let translation                                                     = sender.translation(in: sender.view!)
         let protection : Float                                              = 2.0
         
         if (abs(Float(translation.x) - oldX) >= protection){
@@ -391,7 +391,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             oldY                                                            = Float(translation.y)
         }
         
-        if(sender.state == UIGestureRecognizerState.Ended) {
+        if(sender.state == UIGestureRecognizerState.ended) {
             oldX                                                            = 0
             oldY                                                            = 0
         }
@@ -399,17 +399,17 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
     
     
 //MARK: Render the scene
-    func renderer(aRenderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval){
+    func renderer(_ aRenderer: SCNSceneRenderer, updateAtTime time: TimeInterval){
         
         // Render the scene
-        dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
+        DispatchQueue.main.async { [weak self] () -> Void in
             if let strongSelf = self {
                 if let mm = strongSelf.motionManager, let motion = mm.deviceMotion {
                     let currentAttitude                                     = motion.attitude
                     
                     var roll : Double                                       = currentAttitude.roll
                     
-                    if(UIApplication.sharedApplication().statusBarOrientation == UIInterfaceOrientation.LandscapeRight) {
+                    if(UIApplication.shared.statusBarOrientation == UIInterfaceOrientation.landscapeRight) {
                         roll                                                = -1.0 * (-M_PI - roll)
                     }
                     
@@ -430,7 +430,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
     }
     
 //MARK: Slider
-    private func updateSliderProgression() {
+    fileprivate func updateSliderProgression() {
         
         let playerDuration = self.playerItemDuration()
         if CMTIME_IS_INVALID(playerDuration) {
@@ -439,7 +439,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
         
         let duration = Float(CMTimeGetSeconds(playerDuration))
-        if isfinite(duration) && (duration > 0) {
+        if duration.isFinite && (duration > 0) {
             let minValue                                                    = playerSlideBar.minimumValue
             let maxValue                                                    = playerSlideBar.maximumValue
             let time                                                        = Float(CMTimeGetSeconds(player.currentTime()))
@@ -449,11 +449,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
     }
     
-    private func playerItemDuration() -> CMTime {
+    fileprivate func playerItemDuration() -> CMTime {
         
         let thePlayerItem                                                   = player.currentItem
         
-        if AVPlayerItemStatus.ReadyToPlay == thePlayerItem?.status {
+        if AVPlayerItemStatus.readyToPlay == thePlayerItem?.status {
             return thePlayerItem?.duration ?? kCMTimeInvalid
         }
         
@@ -461,7 +461,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
     }
     
-    @IBAction func sliderChangeProgression(sender: UISlider) {
+    @IBAction func sliderChangeProgression(_ sender: UISlider) {
         
         let playerDuration = self.playerItemDuration()
         
@@ -470,49 +470,49 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
         
         let duration = Float(CMTimeGetSeconds(playerDuration))
-        if isfinite(duration) && (duration > 0) {
+        if duration.isFinite && (duration > 0) {
             print(duration,Float64(duration) * Float64(playerSlideBar.value))
-            player.seekToTime(CMTimeMakeWithSeconds(Float64(duration) * Float64(playerSlideBar.value), 60000))
+            player.seek(to: CMTimeMakeWithSeconds(Float64(duration) * Float64(playerSlideBar.value), 60000))
             playPausePlayer()
         }
         
     }
     
-    @IBAction func sliderStartSliding(sender: AnyObject) {
+    @IBAction func sliderStartSliding(_ sender: AnyObject) {
         
         for videoSpriteKitNode in videosSpriteKitNode {
             videoSpriteKitNode.pause()
         }
         
         playingVideo = false
-        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), forState: .Normal)
+        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), for: UIControlState())
         
     }
     
 //MARK: Cardboard on-off
-    @IBAction func activateCardboardView(sender: AnyObject) {
+    @IBAction func activateCardboardView(_ sender: AnyObject) {
         
         cardboardViewOn                                         = !cardboardViewOn
         displayIfNeededCardboardView()
         
     }
     
-    private func displayIfNeededCardboardView() {
+    fileprivate func displayIfNeededCardboardView() {
         
         let width                                               = (view.bounds.width > view.bounds.height) ? view.bounds.width : view.bounds.height;
         
         widthSceneConstraint?.constant                          = (true == cardboardViewOn) ? (width / 2.0) : 1
         heightSceneConstraint?.constant                         = (true == cardboardViewOn) ? (width / 2.0) : 1
-        leftSceneView.hidden                                    = (false == cardboardViewOn)
+        leftSceneView.isHidden                                    = (false == cardboardViewOn)
         
-        cardboardButton?.setImage(UIImage(named: (true == cardboardViewOn) ? "cardboardOn" : "cardboardOff"), forState: .Normal)
+        cardboardButton?.setImage(UIImage(named: (true == cardboardViewOn) ? "cardboardOn" : "cardboardOff"), for: UIControlState())
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if let _ = leftSceneView, _ = rightSceneView {
+        if let _ = leftSceneView, let _ = rightSceneView {
             displayIfNeededCardboardView()
         }
     }
@@ -541,7 +541,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
     }
     
-    func removeNode(node : SCNNode) {
+    func removeNode(_ node : SCNNode) {
         
         for node in node.childNodes {
             removeNode(node)
