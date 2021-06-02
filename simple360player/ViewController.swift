@@ -330,7 +330,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
                 }
             }
             
-            progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.1, Int32(NSEC_PER_SEC)),
+            progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.1, preferredTimescale: Int32(NSEC_PER_SEC)),
                                                                          queue: nil,
                                                                     using: { [unowned self] (time) -> Void in
                                                                                     self.updateSliderProgression()
@@ -352,12 +352,12 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
         
         playingVideo = !playingVideo
-        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), for: UIControlState())
+        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), for: UIControl.State())
         
     }
     
 //MARK: Touch Methods
-    func tapTheScreen(){
+    @objc func tapTheScreen(){
         
         if (hiddenButton){
             playButton.isHidden                                               = false
@@ -374,7 +374,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         hiddenButton                                                        = !hiddenButton
     }
     
-    func panGesture(_ sender: UIPanGestureRecognizer){
+    @objc func panGesture(_ sender: UIPanGestureRecognizer){
         
         let translation                                                     = sender.translation(in: sender.view!)
         let protection : Float                                              = 2.0
@@ -391,7 +391,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
             oldY                                                            = Float(translation.y)
         }
         
-        if(sender.state == UIGestureRecognizerState.ended) {
+        if(sender.state == UIGestureRecognizer.State.ended) {
             oldX                                                            = 0
             oldY                                                            = 0
         }
@@ -453,11 +453,11 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         
         let thePlayerItem                                                   = player.currentItem
         
-        if AVPlayerItemStatus.readyToPlay == thePlayerItem?.status {
-            return thePlayerItem?.duration ?? kCMTimeInvalid
+        if AVPlayerItem.Status.readyToPlay == thePlayerItem?.status {
+            return thePlayerItem?.duration ?? CMTime.invalid
         }
         
-        return kCMTimeInvalid
+        return CMTime.invalid
         
     }
     
@@ -472,7 +472,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         let duration = Float(CMTimeGetSeconds(playerDuration))
         if duration.isFinite && (duration > 0) {
             print(duration,Float64(duration) * Float64(playerSlideBar.value))
-            player.seek(to: CMTimeMakeWithSeconds(Float64(duration) * Float64(playerSlideBar.value), 60000))
+            player.seek(to: CMTimeMakeWithSeconds(Float64(duration) * Float64(playerSlideBar.value), preferredTimescale: 60000))
             playPausePlayer()
         }
         
@@ -485,7 +485,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         }
         
         playingVideo = false
-        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), for: UIControlState())
+        playButton.setImage(UIImage(named: (true == playingVideo) ? "pause@3x.png" : "play@3x.png"), for: UIControl.State())
         
     }
     
@@ -505,7 +505,7 @@ class ViewController: UIViewController, SCNSceneRendererDelegate, UIGestureRecog
         heightSceneConstraint?.constant                         = (true == cardboardViewOn) ? (width / 2.0) : 1
         leftSceneView.isHidden                                    = (false == cardboardViewOn)
         
-        cardboardButton?.setImage(UIImage(named: (true == cardboardViewOn) ? "cardboardOn" : "cardboardOff"), for: UIControlState())
+        cardboardButton?.setImage(UIImage(named: (true == cardboardViewOn) ? "cardboardOn" : "cardboardOff"), for: UIControl.State())
         
     }
     
